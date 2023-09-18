@@ -2,7 +2,10 @@ body {
   height: 100vh;
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
   background: linear-gradient(to top left, #28b487, #7dd56f);
+  overflow: hidden;
 }
 
 h1 {
@@ -13,6 +16,32 @@ h1 {
   padding: 30px;
   text-align: center;
   color: white;
+}
+
+p {
+  color: ghostwhite;
+  font-size: 22px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  background-color: #00ff33;
+  padding: 16px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px #242424;
+  text-shadow: 0 0 7px #242424;
+  transition: 300ms ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+p:hover {
+  transform: scale(1.04);
+}
+
+p:active {
+  transition: 0s;
+  background-color: aquamarine;
+  transform: scale(1);
 }
 
 button {
