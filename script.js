@@ -2,46 +2,48 @@
 
 // DESTRUCTURING ARRAYS
 
+const weekdays = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
+
+const openingHours = {
+  [weekdays[3]]: {
+    open: 12,
+    close: 22,
+  },
+  [weekdays[4]]: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0,
+    close: 24, // open 24h
+  },
+};
+
 const restaurant = {
   name: 'Classico Italiano',
   location: 'Via Angelo Tavanti 23, Firenze, Italy',
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-  openingHours: {
-    thu: {
-      open: 12,
-      close: 22,
-    },
-    fri: {
-      open: 11,
-      close: 23,
-    },
-    sat: {
-      open: 0,
-      close: 24, // open 24h
-    },
-  },
+  //ES6 enhanced object literals
+  //instead of openingHours: openingHours,
+  //it's just:
+  openingHours,
 
-  order: function (starterIndex, mainIndex) {
+  order(starterIndex, mainIndex) {
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
-  orderDelivery: function ({
-    starterIndex = 1,
-    mainIndex = 0,
-    time = '20:00',
-    address,
-  }) {
+  orderDelivery({ starterIndex = 1, mainIndex = 0, time = '20:00', address }) {
     console.log(
       `Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}.`
     );
   },
-
-  orderPasta: function (ing1, ing2, ing3) {
+  //based way to write function in obj
+  orderPasta(ing1, ing2, ing3) {
     console.log(`Here is your delicious pasta with ${ing1}, ${ing2}, ${ing3}`);
   },
-
+  //lame way to write function in obj
   orderPizza: function (mainIngredient, ...otherIngredients) {
     console.log(mainIngredient);
     console.log(otherIngredients);
@@ -336,3 +338,112 @@ rest2.owner &&= '<ANONYMOUS>' // <ANON>
 console.log(rest1);
 console.log(rest2);
 */
+
+// THE FOR-OF LOOP
+//can be a pain when you need the index
+const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+for (const item of menu) {
+  console.log(item);
+}
+//use .entries() to get the index.. ex -> [0, 'Focaccia'],etc,etc
+for (const [i, el] of menu.entries()) {
+  console.log(`${i + 1}: ${el}`);
+}
+// below is an array, with each elem + the index nested in their own arrays
+console.log([...menu.entries()]);
+
+//REGULAR FOR LOOP
+console.log(' ');
+for (let i = 0; i < menu.length; i++) {
+  console.log(menu[i]);
+}
+
+//OPTIONAL CHAINING
+
+// old way: doesnt work bc monday doesnt exist
+//if there are a lot of things to check for, the if statement can get out of hand
+if (restaurant.openingHours && restaurant.openingHours.mon) {
+  console.log(restaurant.openingHours.mon.open);
+}
+//works bc friday exists
+if (restaurant.openingHours.fri) {
+  console.log(restaurant.openingHours.fri.open);
+}
+
+// WITH optional chaining
+//if mon exists, then open will be read
+//if mon doesnt exist, undefined is immediately returned
+//*a property EXISTS, if it's not NULL or UNDEFINED*
+console.log(restaurant.openingHours.mon?.open); // returns undefined
+//if openingHours doesnt exist, then monday wont even be read.
+console.log(restaurant.openingHours?.mon?.open);
+
+// Example
+const days = ['mon', 'tues', 'wed', 'thurs', 'fri', 'sat', 'sun'];
+//loop over the days array, and return whether or not the restaurant is open
+for (const day of days) {
+  //cant use the || operator here bc saturday opens at 0, which returns false (closed)
+  // const open = restaurant.openingHours[day]?.open || 'closed';
+
+  //this is where the ?? (nulling coalescing operator) comes in
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  console.log(`On ${day} we open at ${open}`);
+}
+
+// OPTIONAL CHAINING ON METHODS
+
+//returns the order bc order method exists
+console.log(restaurant.order?.(0, 1) ?? 'Method does not exist');
+//above is the same as below
+console.log(
+  restaurant.order ? restaurant.order(0, 1) : 'Method does not exist'
+);
+//returns false bc orderRisotto method does not exist
+console.log(restaurant.orderRisotto?.(0, 1) ?? 'Method does not exist');
+
+// OPTIONAL CHAINING ON ARRAYS
+
+const users = [{ name: 'mitch' }, { email: 'email@email.io' }];
+// const users = []
+console.log(users[0]?.name ?? 'User array empty');
+
+// WITHOUT optional chaining it looks like:
+if (users.length > 0) {
+  console.log(users[0].name);
+} else {
+  console.log('User array empty');
+}
+
+// TIP: (?) optional chaining is almost always used with (??) **********
+
+// FOR-OF TO LOOP THRU OBJ
+
+// objects are not 'iterables' like an arr, so looping through them requires this syntax
+
+// PROPERTY NAMES
+const properties = Object.keys(openingHours);
+console.log(properties);
+
+// print a string with how many days the restaurant is open
+let openStr = `We are open on ${properties.length} days: `;
+
+// for (const day of Object.keys(openingHours)) {
+//   console.log(day)
+// }
+for (const day of properties) {
+  openStr += `${day} `;
+}
+console.log(openStr);
+
+// PROPERTY VALUES
+
+const values = Object.values(openingHours);
+console.log(values);
+
+// HOW TO DO IT WITH OBJECT
+const entries = Object.entries(openingHours);
+
+// can just do [key, value] in simpler cases
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}

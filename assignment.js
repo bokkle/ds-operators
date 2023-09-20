@@ -1,6 +1,6 @@
 'use strict';
 
-console.log('Coding Challenge 1:');
+console.log('CODING CHALLENGE 1:');
 /*
 1. Create one player array for each team (variables 'players1' and
 'players2')
@@ -99,3 +99,63 @@ game.printGoals(...game.scored);
 
 team1 < team2 && console.log('Team 1 is more likely to win');
 team1 > team2 && console.log('Team 2 is more likely to win');
+
+//CODING CHALLENGE 2
+console.log('\n CODING CHALLENGE 2:');
+/*
+Let's continue with our football betting app! Keep using the 'game' variable from
+before.
+Your tasks:
+1. Loop over the game.scored array and print each player name to the console,
+along with the goal number (Example: "Goal 1: Lewandowski")
+2. Use a loop to calculate the average odd and log it to the console (We already
+studied how to calculate averages, you can go check if you don't remember)
+3. Print the 3 odds to the console, but in a nice formatted way, exactly like this:
+Odd of victory Bayern Munich: 1.33
+Odd of draw: 3.25
+Odd of victory Borrussia Dortmund: 6.5
+Get the team names directly from the game object, don't hardcode them
+(except for "draw"). Hint: Note how the odds and the game objects have the
+same property names 
+4. Bonus: Create an object called 'scorers' which contains the names of the
+players who scored as properties, and the number of goals as the value. In this
+game, it will look like this:
+{
+ Gnarby: 1,
+ Hummels: 1,
+ Lewandowski: 2
+}
+*/
+
+// 1.
+for (const [goal, name] of game.scored.entries()) {
+  console.log(`Goal ${goal + 1}: ${name}`);
+}
+
+// 2. - do w/out creating variables for the values in the obj
+const odds = game.odds
+// const key = Object.keys(odds)
+// const value = Object.values(odds)
+// console.log(odds, key, value)
+
+const average = (value) => {
+    let count = 0
+    for (const val of value) {
+        count += val
+    }
+    return (count / value.length).toFixed(2)
+}
+console.log(average(Object.values(odds)))
+
+
+// 3. - no hardcoding, get directly from game object (except for 'draw')
+const key = Object.keys(game)
+const value = Object.values(game)
+console.log(key, value)
+console.log(`Odd of victory ${Object.values(game)[0]}: ${Object.values(odds)?.[0]}`)
+console.log(`Odd of draw: ${Object.values(odds)?.[1]}`)
+console.log(`Odd of victory ${Object.values(game)[1]}: ${Object.values(odds)?.[2]}`)
+
+
+
+// 4. - bonus but attempt it
