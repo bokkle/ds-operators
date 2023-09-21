@@ -132,12 +132,14 @@ for (const [goal, name] of game.scored.entries()) {
   console.log(`Goal ${goal + 1}: ${name}`);
 }
 
+// 1. instructor answer
+
+for (const [i, player] of game.scored.entries()) {
+  console.log(`Goal ${i + 1}: ${player}`);
+}
+
 // 2. - do w/out creating variables for the values in the obj
 const odds = game.odds;
-// const key = Object.keys(odds)
-// const value = Object.values(odds)
-// console.log(odds, key, value)
-
 const average = (value) => {
   let count = 0;
   for (const val of value) {
@@ -146,6 +148,13 @@ const average = (value) => {
   return (count / value.length).toFixed(2);
 };
 console.log(average(Object.values(odds)));
+
+// 2. instructor answer
+const oddz = Object.values(game.odds);
+let avg = 0;
+for (const odd of oddz) avg += odd;
+avg /= odds.length;
+console.log(`instructor avg: ${avg}`);
 
 // 3. - no hardcoding, get directly from game object (except for 'draw')
 const key = Object.keys(game);
@@ -159,8 +168,15 @@ console.log(
   `Odd of victory ${Object.values(game)[1]}: ${Object.values(odds)?.[2]}`
 );
 
-//kek
+// 3. instructor answer:
+for (const [team, odd] of Object.entries(game.odds)){
+  const teamStr = team === 'x' ? 'draw' : `victory ${game[team]}`
+  console.log(`Odd of ${teamStr} ${odd}`)
+}
 
 // 4. - bonus but attempt it
-
-
+const scorers = {
+  Gnarby: 1,
+  Hummels: 1,
+  Lewandowski: 2,
+};
