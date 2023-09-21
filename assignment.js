@@ -133,29 +133,34 @@ for (const [goal, name] of game.scored.entries()) {
 }
 
 // 2. - do w/out creating variables for the values in the obj
-const odds = game.odds
+const odds = game.odds;
 // const key = Object.keys(odds)
 // const value = Object.values(odds)
 // console.log(odds, key, value)
 
 const average = (value) => {
-    let count = 0
-    for (const val of value) {
-        count += val
-    }
-    return (count / value.length).toFixed(2)
-}
-console.log(average(Object.values(odds)))
-
+  let count = 0;
+  for (const val of value) {
+    count += val;
+  }
+  return (count / value.length).toFixed(2);
+};
+console.log(average(Object.values(odds)));
 
 // 3. - no hardcoding, get directly from game object (except for 'draw')
-const key = Object.keys(game)
-const value = Object.values(game)
-console.log(key, value)
-console.log(`Odd of victory ${Object.values(game)[0]}: ${Object.values(odds)?.[0]}`)
-console.log(`Odd of draw: ${Object.values(odds)?.[1]}`)
-console.log(`Odd of victory ${Object.values(game)[1]}: ${Object.values(odds)?.[2]}`)
+const key = Object.keys(game);
+const value = Object.values(game);
+console.log(key, value);
+console.log(
+  `Odd of victory ${Object.values(game)[0]}: ${Object.values(odds)?.[0]}`
+);
+console.log(`Odd of draw: ${Object.values(odds)?.[1]}`);
+console.log(
+  `Odd of victory ${Object.values(game)[1]}: ${Object.values(odds)?.[2]}`
+);
 
-
+//kek
 
 // 4. - bonus but attempt it
+
+
